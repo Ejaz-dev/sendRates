@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Provider {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  logoUrl     String?
+  websiteUrl  String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  rates       Rate[]
+}
+
+model Rate {
+  id              String   @id @default(cuid())
+  providerId      String
+  provider        Provider @relation(fields: [providerId], references: [id])
+  sourceCurrency  String
+  targetCurrency  String
+  sourceAmount    Float
+  exchangeRate    Float
+  midMarketRate   Float
+  marginPercent   Float
+  flatFee         Float
+  totalReceived   Float
+  deliveryTime    String
+  deliveryMinutes Int?
+  fetchedAt       DateTime @default(now())
+  createdAt       DateTime @default(now())
+
+  @@index([sourceCurrency, targetCurrency, sourceAmount])
+  @@index([providerId])
+  @@index([fetchedAt])
+}
+
+model CurrencyPair {
+  id             String   @id @default(cuid())
+  sourceCurrency String
+  targetCurrency String
+  midMarketRate  Float
+  updatedAt      DateTime @updatedAt
+
+  @@unique([sourceCurrency, targetCurrency])
+}
