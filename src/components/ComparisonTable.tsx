@@ -93,9 +93,10 @@ export default function ComparisonTable({ quotes }: ComparisonTableProps) {
                 >
                   <TableCell className="font-medium">
                     <div className="flex items-center gap-2">
-                      <div
-                        className="w-3 h-3 rounded-full"
-                        style={{ backgroundColor: meta?.color || "#888" }}
+                      <img
+                        src={quote.logoUrl}
+                        alt={quote.providerName}
+                        className="w-6 h-6 rounded"
                       />
                       {quote.providerName}
                       {isBest && (
@@ -158,9 +159,10 @@ export default function ComparisonTable({ quotes }: ComparisonTableProps) {
             >
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <div
-                    className="w-3 h-3 rounded-full"
-                    style={{ backgroundColor: meta?.color || "#888" }}
+                  <img
+                    src={quote.logoUrl}
+                    alt={quote.providerName}
+                    className="w-6 h-6 rounded"
                   />
                   <span className="font-medium">{quote.providerName}</span>
                   {isBest && (
