@@ -5,12 +5,14 @@ import ComparisonTable from "@/components/ComparisonTable";
 import RateDisclaimer from "@/components/RateDisclaimer";
 import { useRates } from "@/hooks/useRates";
 import { Skeleton } from "@/components/ui/skeleton";
+import Header from "@/components/Header";
 
 export default function Home() {
   const { quotes, isLoading, error, lastUpdated, fetchRates } = useRates();
 
   return (
     <main className="min-h-screen bg-background">
+      <Header />
       {/* Hero Section */}
       <section className="border-b bg-muted/30">
         <div className="max-w-5xl mx-auto px-4 py-12 md:py-20 text-center">
