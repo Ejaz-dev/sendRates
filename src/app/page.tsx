@@ -6,6 +6,7 @@ import RateDisclaimer from "@/components/RateDisclaimer";
 import { useRates } from "@/hooks/useRates";
 import { Skeleton } from "@/components/ui/skeleton";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   const { quotes, isLoading, error, lastUpdated, fetchRates } = useRates();
@@ -64,7 +65,16 @@ export default function Home() {
             </p>
           </div>
         )}
+        {!isLoading && !error && quotes.length === 0 && (
+          <div className="text-center py-16 text-muted-foreground">
+            <p className="text-lg">
+                Enter an amount and select currencies to compare rates.
+            </p>
+          </div>
+        )}
       </section>
+
+      <Footer />
     </main>
   );
 }
