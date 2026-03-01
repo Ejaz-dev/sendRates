@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { getCachedRates, setCachedRates } from "@/lib/cache";
 import { getAllQuotes } from "@/lib/providers";
+import { ratelimit } from "@/lib/ratelimit";
 
 const querySchema = z.object({
   source: z.string().length(3).toUpperCase(),
@@ -10,6 +11,17 @@ const querySchema = z.object({
 });
 
 export async function GET(req: NextRequest) {
+  // Rate limiting
+  const ip = req.headers.get("x-forwarded-for") ?? "anonymous";
+  const { success, remaining } = await ratelimit.limit(ip);
+
+  if (!success) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again in a minute." },
+      { status: 429, headers: { "X-RateLimit-Remaining": remaining.toString() } }
+    );
+  }
+
   const params = Object.fromEntries(req.nextUrl.searchParams);
 
   const parsed = querySchema.safeParse(params);
@@ -22,14 +34,14 @@ export async function GET(req: NextRequest) {
 
   const { source, target, amount } = parsed.data;
 
-  // 1. Try cache first
+  // Try cache first
   const cacheKey = { source, target, amount };
   const cached = await getCachedRates(cacheKey);
   if (cached) {
     return NextResponse.json({ quotes: cached, fromCache: true });
   }
 
-  // 2. Fetch fresh quotes
+  // Fetch fresh quotes
   try {
     const quotes = await getAllQuotes({
       sourceCurrency: source,
@@ -37,7 +49,6 @@ export async function GET(req: NextRequest) {
       sourceAmount: amount,
     });
 
-    // 3. Cache the results
     await setCachedRates(cacheKey, quotes);
 
     return NextResponse.json({ quotes, fromCache: false });
