@@ -11,10 +11,10 @@ export default function Header() {
           <span className="font-bold text-lg tracking-tight">SendRates</span>
         </div>
         <nav className="hidden md:flex items-center gap-6 text-sm text-muted-foreground">
-          <a href="#" className="hover:text-foreground transition-colors">
+          <a href="/how-it-works" className="hover:text-foreground transition-colors">
             How it works
           </a>
-          <a href="#" className="hover:text-foreground transition-colors">
+          <a href="/about" className="hover:text-foreground transition-colors">
             About
           </a>
         </nav>

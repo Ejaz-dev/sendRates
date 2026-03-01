@@ -35,8 +35,8 @@ export default function Footer() {
             <div className="space-y-3">
               <h4 className="font-semibold text-sm">Company</h4>
               <div className="flex flex-col gap-2 text-sm text-muted-foreground">
-                <a href="#" className="hover:text-foreground transition-colors">About</a>
-                <a href="#" className="hover:text-foreground transition-colors">How it works</a>
+                <a href="/about" className="hover:text-foreground transition-colors">About</a>
+                <a href="/how-it-works" className="hover:text-foreground transition-colors">How it works</a>
                 <a href="#" className="hover:text-foreground transition-colors">Contact</a>
               </div>
             </div>
