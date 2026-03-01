@@ -1,19 +1,20 @@
 "use client";
 
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import ConversionWidget from "@/components/ConversionWidget";
 import ComparisonTable from "@/components/ComparisonTable";
 import RateDisclaimer from "@/components/RateDisclaimer";
 import { useRates } from "@/hooks/useRates";
 import { Skeleton } from "@/components/ui/skeleton";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 
 export default function Home() {
   const { quotes, isLoading, error, lastUpdated, fetchRates } = useRates();
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="min-h-screen bg-background flex flex-col">
       <Header />
+
       {/* Hero Section */}
       <section className="border-b bg-muted/30">
         <div className="max-w-5xl mx-auto px-4 py-12 md:py-20 text-center">
@@ -25,7 +26,6 @@ export default function Home() {
             MoneyGram, and PayPal — see exactly what your recipient gets.
           </p>
 
-          {/* Conversion Widget */}
           <div className="max-w-4xl mx-auto bg-background rounded-xl border shadow-sm p-6">
             <ConversionWidget onSubmit={fetchRates} isLoading={isLoading} />
           </div>
@@ -33,11 +33,11 @@ export default function Home() {
       </section>
 
       {/* Results Section */}
-      <section className="max-w-5xl mx-auto px-4 py-8">
+      <section className="max-w-5xl mx-auto px-4 py-8 w-full flex-1">
         {isLoading && (
           <div className="space-y-3">
-            {[...Array(3)].map((_, i) => (
-              <Skeleton key={i} className="h-20 w-full rounded-lg" />
+            {[...Array(4)].map((_, i) => (
+              <Skeleton key={i} className="h-16 w-full rounded-lg" />
             ))}
           </div>
         )}
@@ -62,13 +62,6 @@ export default function Home() {
           <div className="text-center py-16 text-muted-foreground">
             <p className="text-lg">
               Enter an amount and select currencies to compare rates.
-            </p>
-          </div>
-        )}
-        {!isLoading && !error && quotes.length === 0 && (
-          <div className="text-center py-16 text-muted-foreground">
-            <p className="text-lg">
-                Enter an amount and select currencies to compare rates.
             </p>
           </div>
         )}
