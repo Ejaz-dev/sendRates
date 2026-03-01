@@ -89,7 +89,7 @@ export default function ComparisonTable({ quotes }: ComparisonTableProps) {
               return (
                 <TableRow
                   key={quote.providerSlug}
-                  className={isBest ? "bg-green-50 dark:bg-green-950/20" : ""}
+                  className={isBest ? "bg-green-50 dark:bg-blue-950/30 table-row-best" : ""}
                 >
                   <TableCell className="font-medium">
                     <div className="flex items-center gap-2">
@@ -100,7 +100,7 @@ export default function ComparisonTable({ quotes }: ComparisonTableProps) {
                       />
                       {quote.providerName}
                       {isBest && (
-                        <Badge variant="secondary" className="text-xs bg-green-100 text-green-800">
+                        <Badge variant="secondary" className="text-xs bg-green-100 text-green-800 dark:bg-blue-900/50 dark:text-blue-300">
                           Best
                         </Badge>
                       )}
@@ -154,7 +154,7 @@ export default function ComparisonTable({ quotes }: ComparisonTableProps) {
             <div
               key={quote.providerSlug}
               className={`rounded-lg border p-4 ${
-                isBest ? "border-green-300 bg-green-50 dark:bg-green-950/20" : ""
+                isBest ? "border-green-300 bg-green-50 dark:border-blue-800/50 dark:bg-blue-950/30" : ""
               }`}
             >
               <div className="flex items-center justify-between mb-3">

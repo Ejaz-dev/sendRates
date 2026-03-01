@@ -16,7 +16,7 @@ export default function Home() {
       <Header />
 
       {/* Hero Section */}
-      <section className="border-b bg-muted/30">
+      <section className="border-b bg-muted/30 hero-gradient">
         <div className="max-w-5xl mx-auto px-4 py-12 md:py-20 text-center">
           <h1 className="text-3xl md:text-5xl font-bold tracking-tight mb-3">
             Find the best exchange rate
@@ -26,7 +26,7 @@ export default function Home() {
             MoneyGram, and PayPal — see exactly what your recipient gets.
           </p>
 
-          <div className="max-w-4xl mx-auto bg-background rounded-xl border shadow-sm p-6">
+          <div className="max-w-4xl mx-auto bg-background rounded-xl border shadow-sm p-6 card-glow">
             <ConversionWidget onSubmit={fetchRates} isLoading={isLoading} />
           </div>
         </div>
