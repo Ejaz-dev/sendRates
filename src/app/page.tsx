@@ -1,15 +1,30 @@
 "use client";
 
+import { useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ConversionWidget from "@/components/ConversionWidget";
 import ComparisonTable from "@/components/ComparisonTable";
+import ShareButton from "@/components/ShareButton";
 import RateDisclaimer from "@/components/RateDisclaimer";
 import { useRates } from "@/hooks/useRates";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Suspense } from "react";
 
-export default function Home() {
-  const { quotes, isLoading, error, lastUpdated, fetchRates } = useRates();
+function HomeContent() {
+  const { quotes, isLoading, error, lastUpdated, fetchRates, lastRequest } = useRates();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const source = searchParams.get("source");
+    const target = searchParams.get("target");
+    const amount = searchParams.get("amount");
+
+    if (source && target && amount) {
+      fetchRates(source.toUpperCase(), target.toUpperCase(), parseFloat(amount));
+    }
+  }, [searchParams, fetchRates]);
 
   return (
     <main className="min-h-screen bg-background flex flex-col">
@@ -53,6 +68,18 @@ export default function Home() {
 
         {!isLoading && !error && quotes.length > 0 && (
           <>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold">
+                Comparing {lastRequest?.source} → {lastRequest?.target}
+              </h2>
+              {lastRequest && (
+                <ShareButton
+                  source={lastRequest.source}
+                  target={lastRequest.target}
+                  amount={lastRequest.amount}
+                />
+              )}
+            </div>
             <ComparisonTable quotes={quotes} />
             <RateDisclaimer lastUpdated={lastUpdated} />
           </>
@@ -69,5 +96,13 @@ export default function Home() {
 
       <Footer />
     </main>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense>
+      <HomeContent />
+    </Suspense>
   );
 }

@@ -3,11 +3,18 @@
 import { useState, useCallback } from "react";
 import { ProviderQuote } from "@/lib/types";
 
+interface LastRequest {
+  source: string;
+  target: string;
+  amount: number;
+}
+
 interface UseRatesResult {
   quotes: ProviderQuote[];
   isLoading: boolean;
   error: string | null;
   lastUpdated: string | null;
+  lastRequest: LastRequest | null;
   fetchRates: (source: string, target: string, amount: number) => Promise<void>;
 }
 
@@ -16,11 +23,13 @@ export function useRates(): UseRatesResult {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
+  const [lastRequest, setLastRequest] = useState<LastRequest | null>(null);
 
   const fetchRates = useCallback(
     async (source: string, target: string, amount: number) => {
       setIsLoading(true);
       setError(null);
+      setLastRequest({ source, target, amount });
 
       try {
         const res = await fetch(
@@ -46,5 +55,5 @@ export function useRates(): UseRatesResult {
     []
   );
 
-  return { quotes, isLoading, error, lastUpdated, fetchRates };
+  return { quotes, isLoading, error, lastUpdated, lastRequest, fetchRates };
 }
