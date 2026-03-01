@@ -52,7 +52,10 @@ function HomeContent() {
         {isLoading && (
           <div className="space-y-3">
             {[...Array(4)].map((_, i) => (
-              <Skeleton key={i} className="h-16 w-full rounded-lg" />
+              <div
+                key={i}
+                className={`h-16 w-full rounded-lg bg-muted/50 shimmer-loading animate-fade-in-up-delay-${i}`}
+              />
             ))}
           </div>
         )}
@@ -68,7 +71,7 @@ function HomeContent() {
 
         {!isLoading && !error && quotes.length > 0 && (
           <>
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-4 animate-fade-in-up">
               <h2 className="text-lg font-semibold">
                 Comparing {lastRequest?.source} → {lastRequest?.target}
               </h2>

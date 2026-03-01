@@ -82,14 +82,14 @@ export default function ComparisonTable({ quotes }: ComparisonTableProps) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {sorted.map((quote) => {
+            {sorted.map((quote, index) => {
               const meta = providerMeta[quote.providerSlug];
               const isBest = quote === bestValue;
 
               return (
                 <TableRow
                   key={quote.providerSlug}
-                  className={isBest ? "bg-green-50 dark:bg-blue-950/30 table-row-best" : ""}
+                  className={`${isBest ? "bg-green-50 dark:bg-blue-950/30 table-row-best" : ""} animate-fade-in-up-delay-${index}`}
                 >
                   <TableCell className="font-medium">
                     <div className="flex items-center gap-2">
@@ -146,14 +146,14 @@ export default function ComparisonTable({ quotes }: ComparisonTableProps) {
 
       {/* Mobile Card View */}
       <div className="md:hidden space-y-3">
-        {sorted.map((quote) => {
+        {sorted.map((quote, index) => {
           const meta = providerMeta[quote.providerSlug];
           const isBest = quote === bestValue;
 
           return (
             <div
               key={quote.providerSlug}
-              className={`rounded-lg border p-4 ${
+              className={`rounded-lg border p-4 animate-fade-in-up-delay-${index} ${
                 isBest ? "border-green-300 bg-green-50 dark:border-blue-800/50 dark:bg-blue-950/30" : ""
               }`}
             >
