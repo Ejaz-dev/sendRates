@@ -3,14 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { currencies } from "@/config/currencies";
+import CurrencySelect from "@/components/CurrencySelect";
 import { ArrowRightLeft, Loader2 } from "lucide-react";
 
 interface ConversionWidgetProps {
@@ -60,23 +53,7 @@ export default function ConversionWidget({
         </div>
 
         {/* Source Currency */}
-        <div className="w-full md:w-40">
-          <label className="text-sm font-medium text-muted-foreground mb-1.5 block">
-            From
-          </label>
-          <Select value={source} onValueChange={setSource}>
-            <SelectTrigger className="h-12">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {currencies.map((c) => (
-                <SelectItem key={c.code} value={c.code}>
-                  {c.flag} {c.code}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+        <CurrencySelect value={source} onChange={setSource} label="From" />
 
         {/* Swap Button */}
         <div className="flex items-end">
@@ -92,23 +69,7 @@ export default function ConversionWidget({
         </div>
 
         {/* Target Currency */}
-        <div className="w-full md:w-40">
-          <label className="text-sm font-medium text-muted-foreground mb-1.5 block">
-            To
-          </label>
-          <Select value={target} onValueChange={setTarget}>
-            <SelectTrigger className="h-12">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {currencies.map((c) => (
-                <SelectItem key={c.code} value={c.code}>
-                  {c.flag} {c.code}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+        <CurrencySelect value={target} onChange={setTarget} label="To" />
 
         {/* Submit */}
         <div className="w-full md:w-auto flex items-end">
